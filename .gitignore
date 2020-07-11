@@ -1,0 +1,14 @@
+# default build directories used by vs/vscode
+out
+build
+
+# various editor and extension config files/dirs
+.clangd
+.vs
+.vscode
+
+# vs build configuration
+CMakeSettings.json
+
+# clangd vscode extension wants this in the root, symbolic link to build artifact
+compile_commands.json

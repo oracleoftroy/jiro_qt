@@ -1,0 +1,5 @@
+---
+Checks:          '*,-fuchsia-*,-google-*,-zircon-*,-abseil-*,-hicpp-*,-readability-qualified-auto,-readability-braces-around-statements,-readability-redundant-access-specifiers,-modernize-use-trailing-return-type,-llvm-*'
+WarningsAsErrors: '*'
+HeaderFilterRegex: ''
+FormatStyle:     none
