@@ -1,6 +1,7 @@
 #include "ui/MainWindow.hpp"
 
 #include <QApplication>
+
 #include "log.hpp"
 
 int main(int argc, char *argv[])

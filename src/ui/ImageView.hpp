@@ -3,8 +3,8 @@
 #include <QString>
 #include <QWidget>
 
-#include "Actions.hpp"
 #include "../stop_source.hpp"
+#include "Actions.hpp"
 
 class QLabel;
 class QListWidget;
@@ -23,9 +23,9 @@ namespace ui
 		~ImageView() override;
 
 		ImageView(const ImageView &) = delete;
-		ImageView &operator=(const ImageView&) = delete;
+		ImageView &operator=(const ImageView &) = delete;
 		ImageView(ImageView &&) = delete;
-		ImageView &operator=(ImageView&&) = delete;
+		ImageView &operator=(ImageView &&) = delete;
 
 		QString archiveName() const noexcept;
 

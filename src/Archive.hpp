@@ -8,6 +8,7 @@
 #include <QVector>
 
 #include <cstdint>
+
 #include "stop_source.hpp"
 
 struct Entry

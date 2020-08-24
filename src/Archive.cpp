@@ -3,18 +3,14 @@
 #include <QLibrary>
 #include <QMimeDatabase>
 
-// #include <7zip/Archive/IArchive.h>
-//#include <7zip/IPassword.h>
-//#include <7zip/ICoder.h>
-
 #include <utility>
 
 #include "log.hpp"
-#include "ziputil/com_ptr.hpp"
+#include "ziputil/ArchiveExtractCallback.hpp"
 #include "ziputil/ArchiveFormats.hpp"
 #include "ziputil/InStream.hpp"
 #include "ziputil/SequentialOutStream.hpp"
-#include "ziputil/ArchiveExtractCallback.hpp"
+#include "ziputil/com_ptr.hpp"
 
 namespace
 {
@@ -64,8 +60,7 @@ namespace
 	}
 }
 
-ReadArchiveWorker::ReadArchiveWorker(QString file_path, stop_token token) noexcept
-	: file_path(std::move(file_path)), token(std::move(token))
+ReadArchiveWorker::ReadArchiveWorker(QString file_path, stop_token token) noexcept : file_path(std::move(file_path)), token(std::move(token))
 {
 }
 
@@ -85,7 +80,8 @@ void ReadArchiveWorker::run()
 		return;
 	}
 
-	if (token.stop_requested()) return;
+	if (token.stop_requested())
+		return;
 
 	QMimeDatabase mimedb;
 	auto type = mimedb.mimeTypeForFile(file_path);
@@ -100,14 +96,15 @@ void ReadArchiveWorker::run()
 
 	IInArchive *p = nullptr;
 
-	if (CreateObject(format, &IID_IInArchive, reinterpret_cast<void**>(&p)) != S_OK)
+	if (CreateObject(format, &IID_IInArchive, reinterpret_cast<void **>(&p)) != S_OK)
 	{
 		LOG_ERROR("Could not create IInArchive for zip format");
 		emit error("Could not create IInArchive for zip format");
 		return;
 	}
 
-	if (token.stop_requested()) return;
+	if (token.stop_requested())
+		return;
 
 	ziputil::com_ptr<IInArchive> inArchive{p};
 	ziputil::InStream inStream{file_path};
@@ -129,17 +126,13 @@ void ReadArchiveWorker::run()
 	// STDMETHOD(GetPropertyInfo)(UInt32 index, BSTR *name, PROPID *propID, VARTYPE *varType) MY_NO_THROW_DECL_ONLY x; \
 	// STDMETHOD(GetProperty)(UInt32 index, PROPID propID, PROPVARIANT *value) MY_NO_THROW_DECL_ONLY x; \
 
-	if (token.stop_requested()) return;
+	if (token.stop_requested())
+		return;
 
 	QVector<Entry> entries;
 	PROPVARIANT value{};
 
-	auto isDirectory = [&](auto i)
-	{
-		return S_OK == inArchive->GetProperty(i, kpidIsDir, &value)
-			&& value.vt == VT_BOOL
-			&& value.boolVal == VARIANT_TRUE;
-	};
+	auto isDirectory = [&](auto i) { return S_OK == inArchive->GetProperty(i, kpidIsDir, &value) && value.vt == VT_BOOL && value.boolVal == VARIANT_TRUE; };
 
 	for (unsigned int i = 0; i < numItems && !token.stop_requested(); ++i)
 	{
@@ -152,11 +145,7 @@ void ReadArchiveWorker::run()
 		inArchive->GetProperty(i, kpidPath, &value);
 
 		if (value.vt == VT_BSTR)
-			entries.push_back(
-				{
-					i,
-					QString::fromWCharArray(value.bstrVal, SysStringLen(value.bstrVal))
-				});
+			entries.push_back({i, QString::fromWCharArray(value.bstrVal, SysStringLen(value.bstrVal))});
 		else
 		{
 			LOG_WARN("Could not read path for index {0}, type is {1}", i, value.vt);
@@ -164,7 +153,8 @@ void ReadArchiveWorker::run()
 		}
 	}
 
-	if (token.stop_requested()) return;
+	if (token.stop_requested())
+		return;
 	emit contents(entries);
 
 	ziputil::ArchiveExtractCallback callback;

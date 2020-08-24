@@ -3,7 +3,6 @@
 #include "../log.hpp"
 #include <7zip/IProgress.h>
 
-
 #include <7zip/ICoder.h>
 
 namespace ziputil
@@ -41,7 +40,8 @@ namespace ziputil
 		else if (iid == IID_IArchiveExtractCallbackMessage)
 			LOG_TRACE("wanted IID_IArchiveExtractCallbackMessage, ignored");
 		else
-			LOG_TRACE("Unknown IID: {{{0:08x}-{1:04x}-{2:04x}-{3:02x}{4:02x}-{5:02x}{6:02x}{7:02x}{8:02x}{9:02x}{10:02x}}}", iid.Data1, iid.Data2, iid.Data3, iid.Data4[0], iid.Data4[1], iid.Data4[2], iid.Data4[3], iid.Data4[4], iid.Data4[5], iid.Data4[6], iid.Data4[7]);
+			LOG_TRACE("Unknown IID: {{{0:08x}-{1:04x}-{2:04x}-{3:02x}{4:02x}-{5:02x}{6:02x}{7:02x}{8:02x}{9:02x}{10:02x}}}", iid.Data1, iid.Data2, iid.Data3,
+				iid.Data4[0], iid.Data4[1], iid.Data4[2], iid.Data4[3], iid.Data4[4], iid.Data4[5], iid.Data4[6], iid.Data4[7]);
 
 		return E_NOINTERFACE;
 	}

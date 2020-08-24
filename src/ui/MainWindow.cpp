@@ -19,7 +19,7 @@
 namespace ui
 {
 	static const auto tab_style =
-R"(QTabWidget::pane { /* The tab widget frame */
+		R"(QTabWidget::pane { /* The tab widget frame */
 	border-top: 1px solid #C2C7CB;
 }
 
@@ -85,8 +85,7 @@ QTabBar::tab:focus:selected {
 }
 )";
 
-	MainWindow::MainWindow(QWidget *parent)
-		: QMainWindow(parent)
+	MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	{
 		QMenuBar *mainMenu = new QMenuBar;
 		auto fileMenu = mainMenu->addMenu(tr("&File"));
@@ -121,8 +120,7 @@ QTabBar::tab:focus:selected {
 		actions.fullscreen = viewMenu->addAction(tr("&Full screen"));
 		actions.fullscreen->setCheckable(true);
 		actions.fullscreen->setShortcut(QKeySequence::FullScreen);
-		connect(actions.fullscreen, &QAction::toggled, this, [this](bool fullscreen)
-		{
+		connect(actions.fullscreen, &QAction::toggled, this, [this](bool fullscreen) {
 			auto state = windowState();
 			if (fullscreen)
 				state |= Qt::WindowFullScreen;
@@ -154,7 +152,7 @@ QTabBar::tab:focus:selected {
 
 		connect(tabs, &QTabWidget::currentChanged, this, [this](int index) {
 			auto widget = tabs->widget(index);
-			auto view = qobject_cast<ImageView*>(widget);
+			auto view = qobject_cast<ImageView *>(widget);
 
 			if (view)
 			{
@@ -166,7 +164,7 @@ QTabBar::tab:focus:selected {
 
 		connect(tabs, &QTabWidget::tabCloseRequested, this, [this](int index) {
 			auto widget = tabs->widget(index);
-			auto view = qobject_cast<ImageView*>(widget);
+			auto view = qobject_cast<ImageView *>(widget);
 
 			auto completed = 0, total = 0;
 
@@ -214,7 +212,7 @@ QTabBar::tab:focus:selected {
 		for (int i = 0; i < numTabs; ++i)
 		{
 			settings.setArrayIndex(i);
-			auto view = qobject_cast<ImageView*>(tabs->widget(i));
+			auto view = qobject_cast<ImageView *>(tabs->widget(i));
 			if (view)
 				settings.setValue("name", view->archiveName());
 		}
@@ -247,7 +245,6 @@ QTabBar::tab:focus:selected {
 		if (numTabs > 0)
 			mainLayout->setCurrentIndex(1);
 
-
 		restoreGeometry(settings.value("geometry").toByteArray());
 		restoreState(settings.value("windowState").toByteArray());
 
@@ -266,18 +263,15 @@ QTabBar::tab:focus:selected {
 		ImageView *view = new ImageView(filename, actions);
 
 		connect(actions.open, &QAction::triggered, this, &MainWindow::fileOpen);
-		connect(view, &ImageView::workStarted, this, [this](int total)
-		{
+		connect(view, &ImageView::workStarted, this, [this](int total) {
 			if (sender() == tabs->currentWidget())
 				progress->setProgress(0, total);
 		});
-		connect(view, &ImageView::workUpdated, this, [this](int completed, int total)
-		{
+		connect(view, &ImageView::workUpdated, this, [this](int completed, int total) {
 			if (sender() == tabs->currentWidget())
 				progress->setProgress(completed, total);
 		});
-		connect(view, &ImageView::activeItemUpdated, this, [this](const QString &name)
-		{
+		connect(view, &ImageView::activeItemUpdated, this, [this](const QString &name) {
 			if (sender() == tabs->currentWidget())
 				statusBar()->showMessage(name);
 		});

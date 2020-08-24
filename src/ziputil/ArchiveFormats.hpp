@@ -6,8 +6,7 @@
 // For some reason, the 7zib library doesn't define these for us
 
 #define DECL_ARCHIVE_FORMAT(name, id) \
-	DEFINE_GUID(Format_ ## name, k_7zip_GUID_Data1, k_7zip_GUID_Data2, k_7zip_GUID_Data3_Common, \
-	0x10, 0x00, 0x00, 0x01, 0x10, id, 0x00, 0x00);
+	DEFINE_GUID(Format_##name, k_7zip_GUID_Data1, k_7zip_GUID_Data2, k_7zip_GUID_Data3_Common, 0x10, 0x00, 0x00, 0x01, 0x10, id, 0x00, 0x00);
 
 DECL_ARCHIVE_FORMAT(Zip, 0x1);
 DECL_ARCHIVE_FORMAT(BZip2, 0x2);

@@ -11,9 +11,9 @@ class stop_token final
 private:
 	friend class stop_source;
 
-	explicit stop_token(std::shared_ptr<std::atomic_bool> token) noexcept
-		: token(std::move(token))
-	{}
+	explicit stop_token(std::shared_ptr<std::atomic_bool> token) noexcept : token(std::move(token))
+	{
+	}
 
 public:
 	[[nodiscard]] bool stop_requested() const noexcept
@@ -29,9 +29,9 @@ private:
 class stop_source final
 {
 public:
-	stop_source()
-		: token(std::make_shared<std::atomic_bool>())
-	{}
+	stop_source() : token(std::make_shared<std::atomic_bool>())
+	{
+	}
 
 	[[nodiscard]] stop_token get_token() const noexcept
 	{

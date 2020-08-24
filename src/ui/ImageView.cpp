@@ -33,8 +33,7 @@ static QListWidgetItem *findEntry(QListWidget *list, const Entry &entry)
 		return items[0];
 	}
 
-	auto it = std::find_if(items.begin(), items.end(), [index = entry.index](auto item)
-	{
+	auto it = std::find_if(items.begin(), items.end(), [index = entry.index](auto item) {
 		LOG_DEBUG("looking for index {0}, checking index {1}", index, item->data(IndexRole).value<uint32_t>());
 		return item->data(IndexRole).value<uint32_t>() == index;
 	});
@@ -63,19 +62,13 @@ namespace ui
 
 		auto archiveWorker = new ReadArchiveWorker(archive, cancellationSource.get_token());
 
-		auto resizeImage = [this] {
-			showImage(imageList->currentItem(), nullptr);
-		};
+		auto resizeImage = [this] { showImage(imageList->currentItem(), nullptr); };
 
 		connect(actions.fitH, &QAction::toggled, this, resizeImage);
 		connect(actions.fitV, &QAction::toggled, this, resizeImage);
 
 		connect(
-			archiveWorker, &ReadArchiveWorker::error, this,
-			[](QString msg) {
-				LOG_ERROR("Archive error: {0}", msg.toStdString());
-			},
-			Qt::QueuedConnection);
+			archiveWorker, &ReadArchiveWorker::error, this, [](QString msg) { LOG_ERROR("Archive error: {0}", msg.toStdString()); }, Qt::QueuedConnection);
 
 		connect(
 			archiveWorker, &ReadArchiveWorker::contents, this,
@@ -182,10 +175,7 @@ namespace ui
 		auto pixmap = current->data(ImageRole).value<QPixmap>();
 
 		auto viewportSize = scrollArea->maximumViewportSize();
-		auto scrollSize = QSize(
-			scrollArea->verticalScrollBar()->size().width(),
-			scrollArea->horizontalScrollBar()->size().height()
-		);
+		auto scrollSize = QSize(scrollArea->verticalScrollBar()->size().width(), scrollArea->horizontalScrollBar()->size().height());
 
 		auto availableSize = viewportSize - scrollSize;
 

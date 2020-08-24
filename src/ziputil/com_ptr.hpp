@@ -12,7 +12,10 @@ namespace ziputil
 	using custom_unique_ptr = std::unique_ptr<T, deleter_from_fn<fn>>;
 
 	template <typename T>
-	concept ComObject = requires (T *x) { x->Release(); };
+	concept ComObject = requires(T *x)
+	{
+		x->Release();
+	};
 
 	template <ComObject T>
 	constexpr void com_release(T *p)

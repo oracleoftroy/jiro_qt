@@ -3,8 +3,7 @@
 
 namespace ziputil
 {
-	InStream::InStream(const QString &path)
-		: file(path)
+	InStream::InStream(const QString &path) : file(path)
 	{
 		if (!file.open(QIODevice::ReadOnly))
 			LOG_WARN("Error opening file: '{0}'", path.toStdString());
@@ -16,19 +15,19 @@ namespace ziputil
 
 		if (iid == IID_IUnknown)
 		{
-			*p = static_cast<IUnknown*>(this);
+			*p = static_cast<IUnknown *>(this);
 			return S_OK;
 		}
 
 		if (iid == IID_ISequentialInStream)
 		{
-			*p = static_cast<ISequentialInStream*>(this);
+			*p = static_cast<ISequentialInStream *>(this);
 			return S_OK;
 		}
 
 		if (iid == IID_IInStream)
 		{
-			*p = static_cast<IInStream*>(this);
+			*p = static_cast<IInStream *>(this);
 			return S_OK;
 		}
 
@@ -57,8 +56,9 @@ namespace ziputil
 		UInt32 bytesRead = 0;
 		int retry = 10;
 
-		do {
-			bytesRead = file.read(static_cast<char*>(data), size);
+		do
+		{
+			bytesRead = file.read(static_cast<char *>(data), size);
 		} while (bytesRead == 0 && !file.atEnd() && retry--);
 
 		if (processedSize)
