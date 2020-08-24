@@ -10,7 +10,7 @@ target_compile_definitions(project_options INTERFACE _ENFORCE_FACET_SPECIALIZATI
 
 if(CMAKE_CXX_COMPILER_ID MATCHES ".*Clang")
 	option(ENABLE_BUILD_WITH_TIME_TRACE "Enable -ftime-trace to generate time tracing .json files on clang" OFF)
-	if (ENABLE_BUILD_WITH_TIME_TRACE)
+	if(ENABLE_BUILD_WITH_TIME_TRACE)
 		add_compile_definitions(project_options INTERFACE -ftime-trace)
 	endif()
 endif()
@@ -38,18 +38,25 @@ option(ENABLE_TESTING "Enable Test Builds" ON)
 
 # Very basic PCH example
 option(ENABLE_PCH "Enable Precompiled Headers" OFF)
-if (ENABLE_PCH)
-	# This sets a global PCH parameter, each project will build its own PCH, which
-	# is a good idea if any #define's change
+if(ENABLE_PCH)
+	# This sets a global PCH parameter, each project will build its own PCH, which is a good idea if any #define's change
 	#
 	# consider breaking this out per project as necessary
-	target_precompile_headers(project_options INTERFACE <vector> <string> <map> <utility>)
+	target_precompile_headers(
+		project_options
+		INTERFACE
+		<algorithm>
+		<vector>
+		<string>
+		<map>
+		<utility>
+	)
+endif()
+
+option(ENABLE_UNITY "Enable Unity builds of projects" OFF)
+if(ENABLE_UNITY)
+	# Add for any project you want to apply unity builds for
+	set_target_properties(project_options PROPERTIES UNITY_BUILD ON)
 endif()
 
 add_subdirectory(src)
-
-option(ENABLE_UNITY "Enable Unity builds of projects" OFF)
-if (ENABLE_UNITY)
-	# Add for any project you want to apply unity builds for
-	set_target_properties(intro PROPERTIES UNITY_BUILD ON)
-endif()

@@ -2,14 +2,13 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
-add_executable(jiro
+add_executable(
+	jiro
 	"main.cpp"
 	"log.hpp"
 	"stop_source.hpp"
-
 	"Archive.cpp"
 	"Archive.hpp"
-
 	"ui/Actions.hpp"
 	"ui/MainWindow.cpp"
 	"ui/MainWindow.hpp"
@@ -17,7 +16,6 @@ add_executable(jiro
 	"ui/ImageView.hpp"
 	"ui/ProgressWidget.cpp"
 	"ui/ProgressWidget.hpp"
-
 	"ziputil/ArchiveFormats.hpp"
 	"ziputil/com_ptr.hpp"
 	"ziputil/InStream.cpp"
