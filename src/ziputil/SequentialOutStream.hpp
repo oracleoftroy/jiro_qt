@@ -1,8 +1,7 @@
 #pragma once
 
-#include <QByteArray>
-
 #include <7zip/IStream.h>
+#include <QByteArray>
 
 namespace ziputil
 {

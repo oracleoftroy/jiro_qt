@@ -24,3 +24,11 @@
 #define LOG_WARN SPDLOG_WARN
 #define LOG_ERROR SPDLOG_ERROR
 #define LOG_CRITICAL SPDLOG_CRITICAL
+
+// HACK: 7zip includes windows.h without WIN32_LEAN_AND_MEAN to get COM goodies, but
+// fmtlib (which spdlog uses) defines WIN32_LEAN_AND_MEAN, exclucing COM.
+// Explicitly include unknwn.h so that we alway have IUnknown no matter what
+// order our headers happen to be in
+#if defined(_WIN32)
+#include <unknwn.h>
+#endif
