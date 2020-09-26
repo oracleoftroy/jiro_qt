@@ -8,8 +8,14 @@
 #include <QVector>
 
 #include <cstdint>
+#include <version>
 
-#include "stop_source.hpp"
+#if defined(__cpp_lib_jthread)
+#	include <stop_token>
+using std::stop_token;
+#else
+#	include "stop_source.hpp"
+#endif
 
 struct Entry
 {

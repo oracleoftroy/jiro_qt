@@ -16,14 +16,6 @@ add_executable(
 	"ui/ImageView.hpp"
 	"ui/ProgressWidget.cpp"
 	"ui/ProgressWidget.hpp"
-	"ziputil/ArchiveFormats.hpp"
-	"ziputil/com_ptr.hpp"
-	"ziputil/InStream.cpp"
-	"ziputil/InStream.hpp"
-	"ziputil/SequentialOutStream.cpp"
-	"ziputil/SequentialOutStream.hpp"
-	"ziputil/ArchiveExtractCallback.cpp"
-	"ziputil/ArchiveExtractCallback.hpp"
 )
 
 target_link_libraries(jiro PRIVATE project_options project_warnings)
@@ -37,11 +29,8 @@ target_link_libraries(jiro PRIVATE Qt5::Widgets)
 find_package(Qt5Gui CONFIG REQUIRED)
 target_link_libraries(jiro PRIVATE Qt5::Gui)
 
-find_package(7zip CONFIG REQUIRED)
-target_link_libraries(jiro PRIVATE 7zip::7zip)
-# make sure IID_* variables are declared
-target_compile_definitions(jiro PRIVATE INITGUID)
-
+include(FindLibArchive)
+target_link_libraries(jiro PRIVATE LibArchive::LibArchive)
 find_package(fmt CONFIG REQUIRED)
 target_link_libraries(jiro PRIVATE fmt::fmt-header-only)
 

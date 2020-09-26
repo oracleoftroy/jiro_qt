@@ -23,8 +23,7 @@ constexpr auto ImageRole = Qt::UserRole + 2;
 static QListWidgetItem *findEntry(QListWidget *list, const Entry &entry)
 {
 	auto items = list->findItems(entry.filename, Qt::MatchFixedString);
-
-	LOG_DEBUG("found {} items", items.size());
+	LOG_TRACE("found {} items", items.size());
 
 	// most of the time we should hit this
 	if (items.size() == 1)

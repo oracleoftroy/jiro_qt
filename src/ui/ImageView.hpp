@@ -3,7 +3,16 @@
 #include <QString>
 #include <QWidget>
 
-#include "../stop_source.hpp"
+#include <version>
+
+#if defined(__cpp_lib_jthread)
+#	include <stop_token>
+using std::stop_source;
+using std::stop_token;
+#else
+#	include "../stop_source.hpp"
+#endif
+
 #include "Actions.hpp"
 
 class QLabel;
@@ -50,7 +59,7 @@ namespace ui
 		void activeItemUpdated(const QString &name);
 
 	private:
-		void showImage(QListWidgetItem *current, [[maybe_unused]] QListWidgetItem *previous) noexcept;
+		void showImage(QListWidgetItem *current, QListWidgetItem *previous) noexcept;
 		void resizeEvent(QResizeEvent *event) override;
 
 	private:
