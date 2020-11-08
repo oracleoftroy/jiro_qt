@@ -20,15 +20,17 @@ function(set_project_warnings project_name)
 		/w14547 # 'operator': operator before comma has no effect; expected operator with side-effect
 		/w14549 # 'operator': operator before comma has no effect; did you intend 'operator'?
 		/w14555 # expression has no effect; expected expression with side- effect
-		# TODO: Remove this - Qt headers trigger this warning /w14619 # pragma warning: there is no warning number 'number'
-		/wd5054 # disable operator '+': deprecated between enumerations of different types
 		/w14640 # Enable warning on thread un-safe static member initialization
 		/w14826 # Conversion from 'type1' to 'type_2' is sign-extended. This may cause unexpected runtime behavior.
 		/w14905 # wide string literal cast to 'LPSTR'
 		/w14906 # string literal cast to 'LPWSTR'
 		/w14928 # illegal copy-initialization; more than one user-defined conversion has been implicitly applied
-		# TODO: Remove this - Qt qvector heander triggers this warning
+		# TODO: Remove this - Qt headers trigger this warning /w14619 # pragma warning: there is no warning number 'number'
+		/wd5054 # disable operator '+': deprecated between enumerations of different types
+		# TODO: Remove this - Qt qvector header triggers this warning
 		/wd4127 # conditional expression is constant
+		# TODO: Remove this - libfmt triggers this warning
+		/wd4459
 		/permissive- # standards conformance mode for MSVC compiler.
 	)
 
